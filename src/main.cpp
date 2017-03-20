@@ -103,5 +103,15 @@ int main(int argc, char** argv)
         }
     }
 
+	QFile file(":qdarkstyle/style.qss");
+	if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+		app.setStyleSheet(file.readAll());
+		file.close();
+	}
+	QPalette palette = app.palette();
+	palette.setColor(QPalette::Active, QPalette::Base, QColor(100,100,100));
+	palette.setColor(QPalette::Link, QColor("#00bfff"));
+	app.setPalette(palette);
+
     return app.exec();
 }
