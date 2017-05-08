@@ -128,14 +128,6 @@ set(keepassx_SOURCES
     streams/SymmetricCipherStream.cpp
 )
 
-set(keepassx_RESOURCES
-	./dark_theme/style.qrc
-)
-
-# With AUTORCC rcc is ran by cmake before language files are generated,
-# and thus we call rcc explicitly
-qt5_add_resources(keepassx_APP_RESOURCES ${keepassx_RESOURCES})
-
 set(keepassx_SOURCES_MAINEXE
     main.cpp
 )
@@ -173,14 +165,15 @@ add_library(keepassx_core STATIC ${keepassx_SOURCES})
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
 target_link_libraries(keepassx_core Qt5::Core Qt5::Concurrent Qt5::Widgets)
 
-add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE} ${keepassx_APP_RESOURCES})
+add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
 target_link_libraries(${PROGNAME}
                       keepassx_core
                       Qt5::Core
                       Qt5::Concurrent
                       Qt5::Widgets
                       ${GCRYPT_LIBRARIES}
-                      ${ZLIB_LIBRARIES})
+					  ${ZLIB_LIBRARIES}
+					  ${LIBQDARK_LIBRARY})
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 

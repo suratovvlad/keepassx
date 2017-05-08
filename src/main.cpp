@@ -18,6 +18,8 @@
 #include <QCommandLineParser>
 #include <QFile>
 
+#include <libqdark/QDarkThemePlugin.h>
+
 #include "config-keepassx.h"
 #include "core/Config.h"
 #include "core/Tools.h"
@@ -26,6 +28,8 @@
 #include "gui/Application.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
+
+#include <QDebug>
 
 int main(int argc, char** argv)
 {
@@ -39,6 +43,11 @@ int main(int argc, char** argv)
     Application::setApplicationVersion(KEEPASSX_VERSION);
     // don't set organizationName as that changes the return value of
     // QStandardPaths::writableLocation(QDesktopServices::DataLocation)
+
+	// Enable Dark Theme
+	QDarkThemePlugin darkThemePlugin;
+	// Change links color
+	darkThemePlugin.changeLinksColor();
 
     QApplication::setQuitOnLastWindowClosed(false);
 
@@ -103,15 +112,8 @@ int main(int argc, char** argv)
         }
     }
 
-	QFile file(":qdarkstyle/style.qss");
-	if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-		app.setStyleSheet(file.readAll());
-		file.close();
-	}
-	QPalette palette = app.palette();
-	palette.setColor(QPalette::Active, QPalette::Base, QColor(100,100,100));
-	palette.setColor(QPalette::Link, QColor("#00bfff"));
-	app.setPalette(palette);
+	// Initialize Dark Theme plugin
+	darkThemePlugin.initialize();
 
     return app.exec();
 }
