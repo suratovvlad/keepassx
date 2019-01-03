@@ -18,6 +18,8 @@
 #include <QCommandLineParser>
 #include <QFile>
 
+#include <libqdark/QDarkThemePlugin.h>
+
 #include "config-keepassx.h"
 #include "core/Config.h"
 #include "core/Tools.h"
@@ -39,6 +41,11 @@ int main(int argc, char** argv)
     Application::setApplicationVersion(KEEPASSX_VERSION);
     // don't set organizationName as that changes the return value of
     // QStandardPaths::writableLocation(QDesktopServices::DataLocation)
+
+    // Enable Dark Theme
+	auto darkThemePlugin = std::unique_ptr<libqdark::QDarkThemePlugin>{ new libqdark::QDarkThemePlugin{} };
+	// Change links color
+	darkThemePlugin->changeLinksColor();
 
     QApplication::setQuitOnLastWindowClosed(false);
 
@@ -102,6 +109,9 @@ int main(int argc, char** argv)
             }
         }
     }
+
+    // Initialize Dark Theme plugin
+    darkThemePlugin->initialize();
 
     return app.exec();
 }

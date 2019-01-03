@@ -163,6 +163,7 @@ find_package(Gcrypt 1.6.0 REQUIRED)
 
 find_package(ZLIB REQUIRED)
 
+
 check_cxx_source_compiles("
   #include <zlib.h>
 
@@ -199,6 +200,9 @@ if(UNIX)
 endif()
 
 include_directories(SYSTEM ${GCRYPT_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
+
+find_package(Libqdark REQUIRED)
+include_directories(${LIBQDARK_INCLUDE_DIR})
 
 include(FeatureSummary)
 

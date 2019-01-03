@@ -172,7 +172,8 @@ target_link_libraries(${PROGNAME}
                       Qt5::Concurrent
                       Qt5::Widgets
                       ${GCRYPT_LIBRARIES}
-                      ${ZLIB_LIBRARIES})
+                      ${ZLIB_LIBRARIES}
+                      ${LIBQDARK_LIBRARY})
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 
